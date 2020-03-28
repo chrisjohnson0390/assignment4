@@ -1,13 +1,13 @@
 package com.meritamerica.assignment4;
 
-public class WithdrawTransaction {
-	
-	BankAccount targetAccount;
-	double amount;
+import java.util.Date;
 
-	public WithdrawTransaction(BankAccount targetAccount, double amount) {
+public class WithdrawTransaction extends Transaction{
+
+	WithdrawTransaction(BankAccount targetAccount, double amount){
+		account = null;
 		this.targetAccount = targetAccount;
 		this.amount = amount;
+		this.date = new Date();
 	}
-	// Coming back to class to apply a method if needed. ( If it needs to be an object)
 }

@@ -1,12 +1,17 @@
 package com.meritamerica.assignment4;
 
- class FraudQueue {
+import java.util.ArrayList;
+import java.util.List;
+
+class FraudQueue {
 	 
+	/*
 	 private Transaction arr[]; // Array to store the queue elements
 	 private int front; //points to the element at the front of the Queue
 	 private int rear; //points to last element in Queue
 	 private int capacity; // size of the Queue
 	 private int count;// current size of the Queue
+	 
 	 
 	//Constructor to initialize Queue 
 	 FraudQueue(int size){
@@ -66,7 +71,21 @@ package com.meritamerica.assignment4;
 	 public boolean isFull() {
 		 return (size()== capacity);
 	 }
-	 
+	 */
+	
+private List<Transaction> transactions = new ArrayList<Transaction>();
+	
+	FraudQueue(){
+		
+	}
+	
+	public void addTransaction(Transaction transaction) {
+		transactions.add(transaction);
+	}
+	
+	public List<Transaction> getTransaction() {
+		return transactions;
+	}
 	 
 	 
 	 

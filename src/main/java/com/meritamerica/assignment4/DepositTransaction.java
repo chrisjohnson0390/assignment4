@@ -1,14 +1,14 @@
 package com.meritamerica.assignment4;
 
+import java.util.Date;
+
 public class DepositTransaction extends Transaction{
 	
-	BankAccount targetAccount;
-	double amount;
-	
-	
-	public DepositTransaction(BankAccount targetAccount, double amount) {
+	DepositTransaction(BankAccount targetAccount, double amount){
+		account = null;
 		this.targetAccount = targetAccount;
 		this.amount = amount;
+		this.date = new Date();
 	}
-// Coming back to class to apply a method if needed. ( If it needs to be an object)
+
 }

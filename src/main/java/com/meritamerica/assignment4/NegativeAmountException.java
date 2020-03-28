@@ -1,10 +1,10 @@
 package com.meritamerica.assignment4;
 
-public class NegativeAmountException extends Exception {
-	public NegativeAmountException(String message) {
-		super (message);
-		
-	
-	}
+public class NegativeAmountException extends Exception{
 
+	private static final long serialVersionUID = 1L;
+
+	NegativeAmountException(String errorMessage){
+		super(errorMessage);
+	}
 }

@@ -1,15 +1,14 @@
 package com.meritamerica.assignment4;
 
-public class TransferTransaction {
+import java.util.Date;
+
+public class TransferTransaction extends Transaction{
 	
-	BankAccount sourceAccount;
-	BankAccount targetAccount;
-	double amount;
-	
-	public TransferTransaction(BankAccount sourceAccount, BankAccount targetAccount, double amount) {
-		this.sourceAccount = sourceAccount;
+	TransferTransaction(BankAccount sourceAccount, BankAccount targetAccount, double amount){
+		account = sourceAccount;
 		this.targetAccount = targetAccount;
 		this.amount = amount;
+		this.date = new Date();
 	}
 
 }

@@ -1,35 +1,40 @@
 package com.meritamerica.assignment4;
 
-
-class CDOffering {
+public class CDOffering {
 	
-	private int term;
-	private double interestRate;
+	int term;
+	double interestRate;
 
 	public CDOffering(int term, double interestRate){
 		this.term = term;
 		this.interestRate = interestRate;
 	}
 
+	public static CDOffering readFromString(String cdOfferingDataString){
+		try {
+			String[] temp = cdOfferingDataString.split(",");
+			int tempTerm = Integer.valueOf(temp[0]);
+			double tempInterestRate = Double.valueOf(temp[1]);
+			CDOffering newAccount = new CDOffering(tempTerm, tempInterestRate);
+			return newAccount;
+		}
+		catch(Exception exception) {
+			throw new NumberFormatException();
+		}
+	}
+	
 	public int getTerm() {
 		return term;
+	}
+	
+	public String writeToString() {
+		StringBuilder toString = new StringBuilder();
+		toString.append(term).append(",").append(interestRate);
+		return toString.toString();
 	}
 	
 	public double getInterestRate() {
 		return interestRate;
 	}
 
-    static CDOffering readFromString(String cdOfferingDataString) {
-    	String[] holding = cdOfferingDataString.split(",");
-    	int term = Integer.parseInt(holding[0]);
-    	double interestRate = Double.parseDouble(holding[1]);
-    	return new CDOffering(term, interestRate);
-    }
-
-    public String writeToString() {
-    	StringBuilder cdOfferingData = new StringBuilder();
-    	cdOfferingData.append(term).append(",");
-    	cdOfferingData.append(interestRate);
-    	return cdOfferingData.toString(); 
-    }
 }
