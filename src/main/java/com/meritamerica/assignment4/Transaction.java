@@ -5,12 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class Transaction {
-	
+	/**
+	 * Instance variables
+	 */
 	BankAccount account;
 	BankAccount targetAccount;
 	double amount;
 	Date date;
-	
+	/**
+	 * Getter and Setters for Source Account, Target Account, Transaction Date and Amount
+	 * @return
+	 */
 	public BankAccount getSourceAccount() {
 		return account;
 	}
@@ -42,7 +47,11 @@ public abstract class Transaction {
 	public void setTransactionDate(Date date) {
 		this.date = date;
 	}
-	
+	/**
+	 * A method that writes information that writes the date passed through into a string.
+	 * Reformatted date to be simpler. 
+	 * @return
+	 */
 	public String writeToString() {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		StringBuilder toString = new StringBuilder();
@@ -60,7 +69,12 @@ public abstract class Transaction {
 		toString.append(dateFormat.format(date));
 		return toString.toString();
 	}
-	
+	/**
+	 *Read from String , gets data thats being passed through, and returns Transaction with the information 
+	 * @param transactionDataString
+	 * @return
+	 * @throws ParseException
+	 */
 	public static Transaction readFromString(String transactionDataString) throws ParseException {
 		String[] temp = transactionDataString.split(",");
 		

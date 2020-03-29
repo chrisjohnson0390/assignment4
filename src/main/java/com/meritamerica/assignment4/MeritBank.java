@@ -9,12 +9,17 @@ import java.io.FileReader;
 import java.io.FileWriter;
 
 public class MeritBank {
-	
+	/**
+	 * The Variables for the class
+	 */
 	static long accountNumber;
 	static AccountHolder AccountHolders[] = new AccountHolder[0];
 	static CDOffering CDOfferings[] = new CDOffering[0];
 	static FraudQueue fraudQueue = new FraudQueue();
-
+	/**
+	 * A method that adds a new Account Holder to a list of Account Holders
+	 * @param accountHolder
+	 */
 	public static void addAccountHolder(AccountHolder accountHolder) {
 		AccountHolder[] holder = Arrays.copyOf(AccountHolders, AccountHolders.length+1);
 		for(int i = 0; i<AccountHolders.length; i++) {
@@ -23,15 +28,26 @@ public class MeritBank {
 		holder[holder.length - 1] = accountHolder;
 		AccountHolders = holder;
 	}
-	
+	/**
+	 * Get the Account Holders array and return the account holders
+	 * @return
+	 */
 	public static AccountHolder[] getAccountHolders() {
 		return AccountHolders;
 	}
-
+	/**
+	 * Get the CD Offerings and return the offerings
+	 * @return
+	 */
 	public static CDOffering[] getCDOfferings() {
 		return CDOfferings;
 	}
-	
+	/**
+	 * A method that finds the Best Offering for a newly opened CD Account.
+	 * We set the best to be zero and run an enhanced loop to go through the CD Offering Array and check to see which of our offerings is the best for an Account Holder.
+	 * @param depositAmount
+	 * @return best offering 
+	 */
 	public static CDOffering getBestCDOffering(double depositAmount) {
 		double best = 0.0; 
 		CDOffering bestOffering = null;
@@ -46,7 +62,12 @@ public class MeritBank {
 		}
 		return bestOffering;
 	}
-
+	/**
+	 * After find the best offering for Account Holder, we run through the array again to find the second best offering.
+	 * Then set that as the best offering
+	 * @param depositAmount
+	 * @return second best offering
+	 */
 	public static CDOffering getSecondBestCDOffering(double depositAmount) {
 		if(CDOfferings == null) {
 			return null;
@@ -64,25 +85,40 @@ public class MeritBank {
 		}
 		return secondBestOffering;
 	}
-
+	/**
+	 * Constructor to clear the offerings offered. Sets them to null, because offerings change daily
+	 */
 	public static void clearCDOfferings() {
 		CDOfferings = null;
 	}
-	
+	/**
+	 * Setter to set offerings into the Array 
+	 * @param offerings
+	 */
 	public static void setCDOfferings(CDOffering[] offerings) {
 		CDOfferings = offerings;
 	}
-
+	/**
+	 * Get the next account number by taking previous account number and adding it by 1.
+	 * @return Current number
+	 */
 	public static long getNextAccountNumber() {
 		long currentAccountNumber = accountNumber;
 		accountNumber += 1;
 		return currentAccountNumber;
 	}
-
+	/**
+	 * Set the next account number to be equal to account number.Updating the variable 
+	 * @param nextAccountNumber
+	 */
 	public static void setNextAccountNumber(long nextAccountNumber) {
 		accountNumber = nextAccountNumber;
 	}
-	
+	/**
+	 * Read from an external file and construct Account Holders with associated accounts
+	 * @param fileName
+	 * @return
+	 */
 	public static boolean readFromFile(String fileName) {
 		CDOfferings = new CDOffering[0];
 		setNextAccountNumber(0);
@@ -151,7 +187,11 @@ public class MeritBank {
 		}
 
 	}
-	
+	/**
+	 * Writing the data for an Account Holder to an external file.
+	 * @param fileName
+	 * @return
+	 */
 	public static boolean writeToFile(String fileName) {
 		try (BufferedWriter nextLine = new BufferedWriter(new FileWriter(fileName))){
         	nextLine.write(String.valueOf(accountNumber));
@@ -233,7 +273,14 @@ public class MeritBank {
 		return total;
 		
 	}
-	
+	/**
+	 * A method that verifies that a transaction follows bank protocols for simple transactions 
+	 * @param transaction
+	 * @return
+	 * @throws NegativeAmountException
+	 * @throws ExceedsAvailableBalanceException
+	 * @throws ExceedsFraudSuspicionLimitException
+	 */
 	public static boolean processTransaction(Transaction transaction) throws NegativeAmountException,
 	ExceedsAvailableBalanceException, ExceedsFraudSuspicionLimitException{
 		BankAccount source = transaction.getSourceAccount();
@@ -241,7 +288,7 @@ public class MeritBank {
 		
 		if(source == null) {
 			if(transaction instanceof WithdrawTransaction) {
-				if(transaction.getAmount() > 0) {
+				if(transaction.getAmount() < 0) {
 					throw new NegativeAmountException("Can not withdraw a negative amount");
 				}
 				if(transaction.getAmount() + target.getBalance() < 0) {
@@ -274,11 +321,24 @@ public class MeritBank {
 		}
 		return true;
 	}
-
+	/**
+	 * A method tht passes in the recursive future value method 
+	 * @param presentValue
+	 * @param interestRate
+	 * @param term
+	 * @return
+	 */
 	public static double futureValue(double presentValue, double interestRate, int term) {
 		return recursiveFutureValue(presentValue, term, interestRate);
 	}
-	
+	/**
+	 * Recursive method for future value.
+	 * @param amount
+	 * @param years
+	 * @param interestRate
+	 * @return
+	 */
+	//Utilized the recursive method in place of math.pow()
 	public static double recursiveFutureValue(double amount, int years,
 			double interestRate) {
 		if(years > 0) {
@@ -287,11 +347,18 @@ public class MeritBank {
 		}
 		return amount;
 	}
-	
+	/**
+	 * Calls on fraud queue
+	 * @return
+	 */
 	public static FraudQueue getFraudQueue() {
 		return fraudQueue;
 	}
-	
+	/**
+	 * A method that go's through the account holder array and gets the information for each account and return it. 
+	 * @param accountId
+	 * @return
+	 */
 	public static BankAccount getBankAccount(long accountId) {
 		for(AccountHolder account : AccountHolders) {
 			for(int c = 0; c < account.getCheckingAccounts().length; c++) {
